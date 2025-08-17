@@ -216,7 +216,7 @@ cdef class p_State:
     cdef vector[string] column_types
     cdef vector[int] event_counts
     cdef np.ndarray T_array
-    cpdef M_c
+    cdef M_c
 
     def __cinit__(
             self, M_c, T, X_L=None, X_D=None,

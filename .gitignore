@@ -16,3 +16,5 @@ website/index.html
 cpp_code/gmon.out
 /src/version.py
 .eggs
+
+venv
