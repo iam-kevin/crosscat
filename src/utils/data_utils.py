@@ -299,7 +299,7 @@ def read_csv(filename, has_header=True):
         csv_reader = csv.reader(fh)
         header = None
         if has_header:
-            header = csv_reader.next()
+            header = next(csv_reader)
         rows = [row for row in csv_reader]
     return header, rows
 
@@ -324,7 +324,7 @@ def continuous_or_ignore_from_file_with_colnames(filename, cctypes, max_rows=Non
     colmask = map(lambda x: 1 if x != 'ignore' else 0, cctypes)
     with open(filename) as fh:
         csv_reader = csv.reader(fh)
-        header = csv_reader.next()
+        header = next(csv_reader)
         T = numpy.array([
                 [col for col, flag in zip(row, colmask) if flag] for row in csv_reader
                 ], dtype=float).tolist()
@@ -440,8 +440,8 @@ def remove_ignore_cols(T, cctypes, colnames):
 
 nan_set = set(['', 'null', 'n/a'])
 _convert_nan = lambda el: el if el.strip().lower() not in nan_set else 'NAN'
-_convert_nans = lambda in_list: map(_convert_nan, in_list)
-convert_nans = lambda in_T: map(_convert_nans, in_T)
+_convert_nans = lambda in_list: list(map(_convert_nan, in_list))
+convert_nans = lambda in_T: list(map(_convert_nans, in_T))
 
 def read_data_objects(filename, max_rows=None, gen_seed=0,
                       cctypes=None, colnames=None):
